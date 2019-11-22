@@ -27,6 +27,9 @@
 #include "mdss_mdp.h"
 #include "mdss_mdp_trace.h"
 #include "mdss_debug.h"
+#if defined(CONFIG_FB_MSM_MDSS_SAMSUNG)
+#include "samsung/ss_dsi_panel_common.h" /* UTIL HEADER */
+#endif
 
 #define MDSS_MDP_QSEED3_VER_DOWNSCALE_LIM 2
 #define NUM_MIXERCFG_REGS 3
@@ -5417,11 +5420,23 @@ int mdss_mdp_display_commit(struct mdss_mdp_ctl *ctl, void *arg,
 	bool is_bw_released, split_lm_valid;
 	struct mdss_data_type *mdata = mdss_mdp_get_mdata();
 	u32 ctl_flush_bits = 0, sctl_flush_bits = 0;
+#if defined(CONFIG_FB_MSM_MDSS_SAMSUNG)
+	struct samsung_display_driver_data *vdd = NULL;
+	struct mdss_panel_info *pinfo = NULL;
+	struct mdss_dsi_ctrl_pdata *ctrl_pdata = NULL;
+#endif
 
 	if (!ctl) {
 		pr_err("display function not set\n");
 		return -ENODEV;
 	}
+
+#if defined(CONFIG_FB_MSM_MDSS_SAMSUNG)
+	vdd = samsung_get_vdd();
+	pinfo = &ctl->panel_data->panel_info;
+	ctrl_pdata = container_of(ctl->panel_data, struct mdss_dsi_ctrl_pdata,
+				panel_data);
+#endif
 
 	mutex_lock(&ctl->lock);
 	pr_debug("commit ctl=%d play_cnt=%d\n", ctl->num, ctl->play_cnt);
@@ -5662,6 +5677,17 @@ int mdss_mdp_display_commit(struct mdss_mdp_ctl *ctl, void *arg,
 		mdss_mdp_bwcpanic_ctrl(mdata, true);
 
 	ATRACE_BEGIN("flush_kickoff");
+
+#if defined(CONFIG_FB_MSM_MDSS_SAMSUNG)
+	if ((vdd->init_panel_before_commit) && (pinfo->type == MIPI_VIDEO_PANEL)) {
+		vdd->init_panel_before_commit = false;
+		mdss_mdp_ctl_intf_event(ctl, MDSS_EVENT_LINK_READY, NULL,CTL_INTF_EVENT_FLAG_DEFAULT);
+		mdss_mdp_ctl_intf_event(ctl, MDSS_EVENT_UNBLANK, NULL,CTL_INTF_EVENT_FLAG_DEFAULT);
+		if (ctrl_pdata->on_cmds.link_state == DSI_HS_MODE)
+			mdss_mdp_ctl_intf_event(ctl, MDSS_EVENT_PANEL_ON, NULL,CTL_INTF_EVENT_FLAG_DEFAULT);
+	}
+#endif
+
 	mdss_mdp_ctl_write(ctl, MDSS_MDP_REG_CTL_FLUSH, ctl_flush_bits);
 	if (sctl) {
 		if (sctl_flush_bits) {

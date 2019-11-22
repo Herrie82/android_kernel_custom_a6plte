@@ -1,0 +1,17 @@
+menu "Product"
+
+config SEC_A6PLTE_PROJECT
+	depends on ARCH_SDM450
+	default n
+	bool "Samsung A6-Plus LTE Project"
+	help
+	  Support for Samsung A6-Plus LTE Project
+
+config MACH_A6PLTE_EUR_OPEN
+	depends on SEC_A6PLTE_PROJECT
+	default n
+	bool "Samsung A6-Plus LTE EUR OPEN"
+	help
+	  Support for Samsung A6-Plus LTE EUR OPEN device.
+
+endmenu

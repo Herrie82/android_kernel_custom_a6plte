@@ -196,4 +196,22 @@ source "drivers/firmware/Kconfig"
 
 source "drivers/bif/Kconfig"
 
+menu "Smartphone devices"
+
+source "drivers/fingerprint/Kconfig"
+
+source "drivers/battery_v2/Kconfig"
+
+source "drivers/muic/Kconfig"
+
+source "drivers/motor/Kconfig"
+
+source "drivers/muic/universal/Kconfig"
+
+source "drivers/nfc/Kconfig"
+
+source "drivers/staging/samsung/sec_notifier/Kconfig"
+
+endmenu
+
 endmenu

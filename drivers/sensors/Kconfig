@@ -1,12 +1,71 @@
-config SENSORS
-	bool "Sensors Class Support"
-	help
-	  This option enables the sensor sysfs class in /sys/class/sensors.
-	  You'll need this to do anything useful with sensors. If unsure, say N.
+menu "Sensors"
 
-config SENSORS_SSC
-	bool "Enable Sensors Driver Support for SSC"
+config SENSORS_CORE
+    bool "Sensors Class Support"
+    help
+      This option enables the sensor sysfs class in /sys/class/sensors.
+      You'll need this to do anything useful with sensorss. If unsure, say N.
+
+config SENSORS_CM36657
+	depends on I2C
+	tristate "CM36657 driver"
+	default n
 	help
-	  Add support for sensors SSC driver.
-	  This driver is used for exercising sensors use case,
-	  time syncing with ADSP clock.
+	  This option enables proximity & light sensor using CM36658 driver.
+
+config SENSORS_CM36658
+	depends on I2C
+	tristate "CM36658 driver"
+	default n
+	help
+	  This option enables proximity & light sensor using CM36658 driver.
+
+config SENSORS_YAS539
+	tristate "YAS539 Sensor Driver"
+	depends on I2C
+	default n
+	help
+	  If you say yes here you get support for YAMAHA
+	  YAS539 Geomagnitor Sensor.
+
+config SENSORS_YAS_RESET_DEFENCE_CODE
+	depends on I2C
+	tristate "YAS defence code by reset"
+	default n
+	help
+	  This option enables defence code by reset using yas driver.
+
+config SENSORS_YAS539_DEFAULT_MATRIX
+	depends on SENSORS_YAS539
+	tristate "The default conpensation matrix for YAS539 softiron"
+	default n
+	help
+	  This option is enables the default matrix for YAS539.
+
+config SENSORS_LSM6DSL
+	tristate "STMicroelectronics LSM6DSL sensor"
+	depends on (I2C || SPI) && SYSFS
+	default n
+	help
+	   This driver support the STMicroelectronics LSM6DSL sensor.
+	   To compile this driver as a module, choose M here. The module
+	   will be called lsm6dsl.
+
+config SENSORS_LSM6DSL_I2C
+	tristate "STMicroelectronics LSM6DSL sensor"
+	depends on (I2C || SPI) && SYSFS
+	default n
+	help
+	   This config define sensor communication type is I2C.
+
+config SENSORS_A96T3X6
+	depends on I2C
+	tristate "A96T3X6 driver for grip"
+	default n
+	help
+	  Say Y here if you use A96T3X6 for grip.
+	  This option enables grip sensors using
+	  Above A96T3X6 device driver for grip.
+	  Say N here if you do not use A96T3X6 for grip.
+
+endmenu

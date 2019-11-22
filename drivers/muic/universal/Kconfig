@@ -1,0 +1,34 @@
+#
+# MUIC devices
+#
+
+comment "MUIC configs"
+
+config MUIC_UNIVERSAL
+  bool "UNIVERSAL MUIC"
+	depends on USE_MUIC
+	default n
+	help
+	  If you say yes here you will get support for various MUIC chips.
+
+config MUIC_UNIVERSAL_SM5708
+	bool "SM5708 MUIC"
+	depends on USE_MUIC
+	default n
+	help
+	  If you say yes here you will get support for the SM5708 MUIC chip.
+
+config MUIC_PINCTRL
+  bool "MUIC PINCTRL"
+	depends on USE_MUIC
+	default n
+	help
+	  If you say yes here you will get support for the Pinctrl in MUIC driver.
+
+config MUIC_SUPPORT_RUSTPROOF
+	bool "MUIC Disable UART"
+	depends on !SEC_FACTORY
+	default n
+	help
+	 This option will disable the UART to prevent the rusting of the
+	 IF Connector in the case of Kmini Devices.

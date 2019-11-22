@@ -197,21 +197,9 @@ config SND_SOC_MSM8X16
 	select SND_DYNAMIC_MINORS
 	select MSM_QDSP6_APRV2
 	select MSM_QDSP6V2_CODECS
-	select SND_SOC_WCD9330
-	select SND_SOC_WCD9335
 	select SND_SOC_MSM8X16_WCD
-	select SND_SOC_WSA881X_ANALOG
-	select SND_SOC_WSA881X
 	select MFD_CORE
 	select QTI_PP
-	select DTS_SRS_TM
-	select DOLBY_DAP
-	select DOLBY_DS2
-	select SND_SOC_CPE
-	select SND_SOC_WCD_CPE
-	select SND_SOC_MSM_HDMI_DBA_CODEC_RX
-	select SND_HWDEP
-        select DTS_EAGLE
 	help
 	 To add support for SoC audio on MSM8996.
 	 This will enable sound soc drivers which
@@ -301,5 +289,29 @@ config SND_SOC_MDM9640
 	 interfaces with DSP, also it will enable
 	 the machine drivers and the corresponding
 	 DAI-links.
+
+config SND_SOC_JACK_AUDIO
+	tristate "Samsung Jack Audio"
+	default n
+	help
+		To add support for Samsung Jack Audio
+
+config SEC_SND_ADAPTATION
+	tristate "Samsung ADSP Adaptation"
+	default n
+	help
+		To add support for Samsung ADSP solution
+
+config SEC_SND_TFA98XX
+	tristate "NXP amp support"
+	default n
+	help
+		To add support for NXP amp
+
+config SEC_SND_DEBUG
+	tristate "Debug code for Samsung Audio"
+	default n
+	help
+		Debug code for Samsung Audio
 
 endmenu

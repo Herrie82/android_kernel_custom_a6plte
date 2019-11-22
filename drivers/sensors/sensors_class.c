@@ -571,5 +571,7 @@ static void __exit sensors_exit(void)
 	class_destroy(sensors_class);
 }
 
+
+M:
 subsys_initcall(sensors_init);
 module_exit(sensors_exit);

@@ -3,6 +3,7 @@
 #
 
 ccflags-$(CONFIG_SPI_DEBUG) := -DDEBUG
+ccflags-y += -DENABLE_SENSORS_FPRINT_SECURE
 
 # small core, mostly translating board-specific
 # config declarations into driver model code

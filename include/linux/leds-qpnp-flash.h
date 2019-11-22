@@ -19,6 +19,8 @@
 #define DISABLE_REGULATOR	BIT(1)
 #define QUERY_MAX_CURRENT	BIT(2)
 
+#define FLASH_LED_PREPARE_OPTIONS_MASK	GENMASK(3, 0)
+
 int qpnp_flash_led_prepare(struct led_trigger *trig, int options,
 					int *max_current);
 

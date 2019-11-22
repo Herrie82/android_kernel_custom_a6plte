@@ -559,6 +559,28 @@ config LEDS_AW2013
 	  This option enables support for the AW2013 RGB LED connected
 	  through I2C. Say Y to enable support for the AW2013 LED.
 
+config FLASHLIGHT
+	bool "Flashlight Support"
+	help
+	  This option enables the led sysfs class in /sys/class/flashlight.
+
+config LEDS_SM5708
+	tristate "LED support for SM5708 Flashlight"
+	depends on I2C && MFD_SM5708
+	help
+	  This option enables support for on-chip LED driver on
+	  Silicon-mitus SM5708 includes Torch, Flash.
+
+config LEDS_SEPARATE_PREFLASH
+	tristate "Seperate preflash current for main camera"
+	help
+	  Option for seperate preflash current on SM5705.
+
+config FRONT_LED_FLASH
+	tristate "support for front led flash"
+	help
+	  Enables sysfs node for front led flash support.
+
 comment "LED Triggers"
 source "drivers/leds/trigger/Kconfig"
 

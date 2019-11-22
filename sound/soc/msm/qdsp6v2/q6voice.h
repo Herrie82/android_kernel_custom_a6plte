@@ -42,12 +42,14 @@
 #define CVD_VERSION_0_0                      "0.0"
 #define CVD_VERSION_2_1                      "2.1"
 #define CVD_VERSION_2_2                      "2.2"
+#define CVD_VERSION_2_3                      "2.3"
 
 #define CVD_INT_VERSION_DEFAULT              0
 #define CVD_INT_VERSION_0_0                  1
 #define CVD_INT_VERSION_2_1                  2
 #define CVD_INT_VERSION_2_2                  3
-#define CVD_INT_VERSION_LAST                 CVD_INT_VERSION_2_2
+#define CVD_INT_VERSION_2_3                  4
+#define CVD_INT_VERSION_LAST                 CVD_INT_VERSION_2_3
 #define CVD_INT_VERSION_MAX                  (CVD_INT_VERSION_LAST + 1)
 
 struct cvd_version_table {
@@ -116,6 +118,21 @@ struct voice_rec_route_state {
 	u16 ul_flag;
 	u16 dl_flag;
 };
+
+#ifdef CONFIG_SEC_VOC_SOLUTION
+struct voice_dha_data {
+	short dha_mode;
+	short dha_select;
+	short dha_params[12];
+};
+
+enum {
+	LOOPBACK_DISABLE = 0,
+	LOOPBACK_ENABLE,
+	LOOPBACK_NODELAY,
+	LOOPBACK_MAX,
+};
+#endif /* CONFIG_SEC_VOC_SOLUTION */
 
 enum {
 	VOC_INIT = 0,
@@ -1785,4 +1802,9 @@ uint32_t voice_get_topology(uint32_t topology_idx);
 int voc_set_sound_focus(struct sound_focus_param sound_focus_param);
 int voc_get_sound_focus(struct sound_focus_param *soundFocusData);
 int voc_get_source_tracking(struct source_tracking_param *sourceTrackingData);
+
+#if defined(CONFIG_SEC_SND_ADAPTATION)
+struct common_data *voice_get_common_data(void);
+#endif
+
 #endif

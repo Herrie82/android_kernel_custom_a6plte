@@ -246,6 +246,13 @@ struct msm8916_asoc_mach_data {
 	void __iomem *vaddr_gpio_mux_quin_ctl;
 	void __iomem *vaddr_gpio_mux_pcm_ctl;
 	struct on_demand_supply wsa_switch_supply;
+#ifdef CONFIG_SAMSUNG_JACK
+	int mpp_ch_scale[3];
+#ifdef CONFIG_SEC_MPP_SHARE
+	bool mpp_standalone_mode;
+#endif /* CONFIG_SEC_MPP_SHARE */
+	int earjack_adc;
+#endif /* CONFIG_SAMSUNG_JACK */
 };
 
 struct msm8x16_wcd_pdata {
@@ -309,6 +316,9 @@ struct msm8x16_wcd_priv {
 	bool dec_active[NUM_DECIMATORS];
 	struct on_demand_supply on_demand_list[ON_DEMAND_SUPPLIES_MAX];
 	struct regulator *spkdrv_reg;
+#ifdef CONFIG_SAMSUNG_JACK
+	int micb_2_ref_cnt;
+#endif /* CONFIG_SAMSUNG_JACK */
 	/* mbhc module */
 	struct wcd_mbhc mbhc;
 	/* cal info for codec */
@@ -319,6 +329,12 @@ struct msm8x16_wcd_priv {
 	unsigned long status_mask;
 	struct wcd_imped_i_ref imped_i_ref;
 	enum wcd_mbhc_imp_det_pin imped_det_pin;
+	bool cfilt_ref_sel; /* 0x142, bit[1]:CFILT_REF_SEL */
+	bool tx2n_gnd_sel; /* 0x143, bit[2]:TX2_GND_SEL */
+	bool tx2n_int_pullup_en; /* 0x143, bit[3]:TX2_INT_PULLUP_EN */
+	bool tx2_int_rbias_en; /* 0x143, bit[4]:TX2_INT_RBIAS_EN */
+	bool tx1n_cfilt_ref_sel; /* 0x145, bit[0]:TX1N_CFILT_REF_SEL */
+	bool cdc_a_tx_1_2_atest_ctl_2;
 };
 
 extern int msm8x16_wcd_mclk_enable(struct snd_soc_codec *codec, int mclk_enable,

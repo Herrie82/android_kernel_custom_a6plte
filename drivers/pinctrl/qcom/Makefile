@@ -1,3 +1,5 @@
+ccflags-y := -DENABLE_SENSORS_FPRINT_SECURE
+
 # Qualcomm pin control drivers
 obj-$(CONFIG_PINCTRL_MSM)	+= pinctrl-msm.o
 obj-$(CONFIG_PINCTRL_MDM9640)	+= pinctrl-mdm9640.o

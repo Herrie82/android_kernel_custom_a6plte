@@ -1,0 +1,51 @@
+#
+# MUIC devices
+#
+
+comment "MUIC configs"
+
+config USE_MUIC
+	bool "Using MUIC device driver"
+	depends on I2C
+	default n
+	help
+	  If you say yes here you will get support for
+	  the MUIC device driver.
+
+config MUIC_NOTIFIER
+	bool "MUIC notifier support"
+	depends on USE_MUIC
+	default n
+	help
+	  If you say yes here you will get support for
+	  the MUIC attached device status change notification.
+
+config MUIC_DOCK_NOTIFIER
+	bool "MUIC dock notifier support"
+	depends on USE_MUIC
+	default y
+	help
+	  If you say yes here you will get support for
+	  the MUIC deskdock attached device status change notification.
+	  additional drivers must be disable to stop notification.
+
+config MUIC_RUSTPROOF_ON_USER
+	bool "Using MUIC chip Rustproof function ON for User binary"
+	depends on USE_MUIC
+	default n
+	help
+	  This feature is for MUIC chip's Rustproof function.
+
+config UART3
+        bool "UART3"
+        default n
+        help
+          If you say yes, you can use xo shutdown
+
+config MUIC_SUPPORT_RUSTPROOF
+	bool "MUIC Disable UART"
+	depends on !SEC_FACTORY
+	default n
+	help
+	 This option will disable the UART to prevent the rusting of the
+	 IF Connector in the case of Kmini Devices.

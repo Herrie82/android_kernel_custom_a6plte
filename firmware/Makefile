@@ -136,6 +136,13 @@ fw-shipped-$(CONFIG_USB_VICAM) += vicam/firmware.fw
 fw-shipped-$(CONFIG_VIDEO_CPIA2) += cpia2/stv0672_vp4.bin
 fw-shipped-$(CONFIG_YAM) += yam/1200.bin yam/9600.bin
 
+# Input Device
+ifdef CONFIG_SEC_A6PLTE_PROJECT
+fw-shipped-$(CONFIG_SENSORS_A96T3X6) 		+= abov/a96t326_j8plte.fw \
+											   abov/a96t346_j8plte.fw
+fw-shipped-$(CONFIG_TOUCHSCREEN_SEC_TS) += tsp_sec/y661_a6plus.fw
+endif
+
 fw-shipped-all := $(fw-shipped-y) $(fw-shipped-m) $(fw-shipped-)
 
 quiet_cmd_ihex  = IHEX    $@

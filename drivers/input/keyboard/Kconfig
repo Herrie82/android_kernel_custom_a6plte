@@ -675,4 +675,18 @@ config KEYBOARD_CAP1106
 	  To compile this driver as a module, choose M here: the
 	  module will be called cap1106.
 
+config SENSORS_HALL
+	bool "HALL"
+	depends on KEYBOARD_GPIO
+	default n
+	help
+	Say Y here to enable the HALL
+
+config SENSORS_HALL_FOLDER
+	bool "HALL for FOLDER"
+	depends on SENSORS_HALL
+	default n
+	help
+	  Say Y here to use HALL IC for FOLDER.
+
 endif

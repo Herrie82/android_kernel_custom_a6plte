@@ -438,6 +438,13 @@ config USB_ANDROID_RNDIS_DWORD_ALIGNED
 	help
 		Provides dword aligned for DMA controller.
 
+config USB_CHARGING_EVENT
+	bool "Set usb charging current "
+	depends on USB_G_ANDROID
+	help
+	  For satisfy BC1.2 specification
+	  In unconfigured state or suspend state, Set vbus current to 100mA
+
 source "drivers/usb/gadget/legacy/Kconfig"
 
 endchoice

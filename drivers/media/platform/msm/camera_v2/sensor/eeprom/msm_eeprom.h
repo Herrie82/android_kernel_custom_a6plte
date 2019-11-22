@@ -29,6 +29,55 @@ struct msm_eeprom_ctrl_t;
 
 #define PROPERTY_MAXSIZE 32
 
+#if defined(CONFIG_GET_REAR_MODULE_ID) || defined(CONFIG_GET_FRONT_MODULE_ID)
+/* Module ID : 0x00A8~0x00B7(16Byte) for FROM, EEPROM (Don't support OTP)*/
+#define FROM_REAR_MODULE_ID_ADDR           0x00AE
+#define FROM_REAR2_MODULE_ID_ADDR           0x00AE
+#if defined(CONFIG_SEC_A6PLTE_PROJECT)
+#define FROM_FRONT_MODULE_ID_ADDR           0x00AE
+#else
+#define FROM_FRONT_MODULE_ID_ADDR           0x0056
+#endif
+#define FROM_MODULE_ID_SIZE           16
+#endif
+
+#if defined(CONFIG_GET_REAR_SENSOR_ID) || defined(CONFIG_GET_FRONT_SENSOR_ID)
+#define FROM_REAR_SENSOR_ID_ADDR           0x00B8
+#define FROM_REAR2_SENSOR_ID_ADDR           0x00C8
+#define FROM_FRONT_SENSOR_ID_ADDR           0x0060
+#define FROM_SENSOR_ID_SIZE           16
+#endif
+
+
+#define FROM_REAR_AF_CAL_PAN_ADDR           0x081C
+#define FROM_REAR_AF_CAL_MACRO_ADDR         0x0818
+#if defined(CONFIG_SAMSUNG_MULTI_CAMERA)
+#if defined(CONFIG_CAMERA_DUAL_REAR)
+#define FROM_REAR2_DUAL_TILT_X		            0x11CC /*Rotation Angle x */
+#define FROM_REAR2_DUAL_TILT_Y		            0x11D0 /*Rotation Angle y */
+#define FROM_REAR2_DUAL_TILT_Z		            0x11D4 /*Rotation Angle z */
+#define FROM_REAR2_DUAL_TILT_SX		            0x122C
+#define FROM_REAR2_DUAL_TILT_SY		            0x1230
+#define FROM_REAR2_DUAL_TILT_RANGE	            0x1350
+#define FROM_REAR2_DUAL_TILT_MAX_ERR		    0x1354 
+#define FROM_REAR2_DUAL_TILT_AVG_ERR		    0x1358
+#define FROM_REAR2_DUAL_TILT_DLL_VERSION	    0x10E0
+#define FROM_REAR_DUAL_CAL_ADDR			        0x1170
+#define FROM_REAR_DUAL_CAL_SIZE			        512
+#endif
+#endif
+#define FROM_REAR_AF_CAL_SIZE    	    10
+
+/* MTF exif : 0x0050~0x0085(54Byte) for FROM, EEPROM */
+#if defined(CONFIG_SAMSUNG_MULTI_CAMERA)
+#define FROM_REAR_MTF_ADDR            0x084E
+#define FROM_FRONT_MTF_ADDR           0x08BB
+#if defined(CONFIG_CAMERA_DUAL_REAR)
+#define FROM_REAR2_MTF_ADDR           0x103E
+#endif
+#endif
+#define FROM_MTF_SIZE                 54
+
 struct msm_eeprom_ctrl_t {
 	struct platform_device *pdev;
 	struct mutex *eeprom_mutex;
@@ -45,7 +94,10 @@ struct msm_eeprom_ctrl_t {
 	uint32_t subdev_id;
 	int32_t userspace_probe;
 	struct msm_eeprom_memory_block_t cal_data;
-	uint8_t is_supported;
+	uint16_t is_supported;
+	
+	int pvdd_en;
+	int pvdd_is_en;
 };
 
 #endif
