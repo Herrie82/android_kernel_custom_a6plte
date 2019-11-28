@@ -277,7 +277,7 @@ static inline bool use_1G_block(unsigned long addr, unsigned long next,
 	return true;
 }
 
-static void __init alloc_init_pud(struct mm_struct *mm, pgd_t *pgd,
+static void alloc_init_pud(struct mm_struct *mm, pgd_t *pgd,
 				  unsigned long addr, unsigned long end,
 				  phys_addr_t phys, pgprot_t prot,
 				  void *(*alloc)(unsigned long size), bool force_pages)
@@ -412,9 +412,9 @@ struct dma_contig_early_reserve {
 	unsigned long size;
 };
 
-static struct dma_contig_early_reserve dma_mmu_remap[MAX_CMA_AREAS] __initdata;
+static struct dma_contig_early_reserve dma_mmu_remap[MAX_CMA_AREAS];
 
-static int dma_mmu_remap_num __initdata;
+static int dma_mmu_remap_num;
 
 void __init dma_contiguous_early_fixup(phys_addr_t base, unsigned long size)
 {
